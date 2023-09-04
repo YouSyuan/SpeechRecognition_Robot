@@ -95,10 +95,13 @@ class ChatRobot():
         return r.recognize_google(audio, language=self.LANGUAGE)  # 將讀取到的音頻傳遞給 googlem 語音識別引擎進行辨識，並返回字串
     
     def speak(self):
-        text = self.audio2word()
-        print(text)
+        try:        
+            text = self.audio2word()
+        except:        
+            text = "無法辨識"
         # 將文字轉換為語音
         tts = gTTS(ChatRobot.QA.get(text, "我還不夠聰明，等變聰明了再回答你"), lang=self.LANGUAGE)
+
         tts.save("robotSay.wav")
         # 打開音檔
         sound = AudioSegment.from_file("robotSay.wav")
